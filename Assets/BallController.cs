@@ -11,6 +11,26 @@ public class BallController : MonoBehaviour {
     private GameObject gameoverText;
     private GameObject scoreText;
     private GameObject rankText;
+    private void Score()
+    {
+        if (this.collSwitch == 1)
+        {
+            this.score += 10;
+        }
+        else if (this.collSwitch == 2)
+        {
+            this.score += 30;
+        }
+        else if (this.collSwitch == 3)
+        {
+            this.score += 50;
+        }
+        else if (this.collSwitch == 4)
+        {
+            this.score += 100;
+        }
+        this.scoreText.GetComponent<Text>().text = "Score:" + score.ToString();
+    }
     private void Rank()
     {
         if (this.score >= 10000)
@@ -48,45 +68,33 @@ public class BallController : MonoBehaviour {
             this.gameoverText.GetComponent<Text>().text = "GameOver";
             Rank();
         }
-        if (this.collSwitch == 1&&this.collCount==1)
-        {
-            this.score += 10;
-        }else if (this.collSwitch == 2&&this.collCount==1)
-        {
-            this.score += 30;
-        }else if (this.collSwitch == 3&&this.collCount==1)
-        {
-            this.score += 50;
-        }else if (this.collSwitch == 4&&this.collCount==1)
-        {
-            this.score += 100;
-        }
-        this.scoreText.GetComponent<Text>().text = "Score:" + score.ToString();
+       
 	}
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.CompareTag("SmallStarTag"))
         {
             this.collSwitch = 1;
-            this.collCount++;
+          
         }else if (other.gameObject.CompareTag("LargeStarTag"))
         {
             this.collSwitch = 2;
-            this.collCount++;
+            
         }else if (other.gameObject.CompareTag("SmallCloudTag"))
         {
             this.collSwitch = 3;
-            this.collCount++;
+            
         }else if (other.gameObject.CompareTag("LargeCloudTag"))
         {
             this.collSwitch = 4;
-            this.collCount++;
+            
         }
         else
         {
             this.collSwitch = 0;
-            this.collCount = 0;
+            
         }
+        Score();
     }
    
 }
